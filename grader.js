@@ -39,7 +39,7 @@ var downloadurl = function(inurl){
 		var checkFile = fs.createWriteStream("check.html");
 		checkFile.end(result);
 		runChecks();
-		return "check.html";
+		return "grader_check.html";
 	  }
 	});
 }
@@ -50,7 +50,7 @@ var assertFileExists = function(infile) {
 		// if the file does not exist and is an url, download it.
 		if(instr.substr(0,4) == "http"){
 			downloadurl(instr);
-			instr = "check.html";
+			instr = "grader_check.html";
 			return instr;
 		}else{
 			console.log("%s does not exist. Exiting.", instr);
@@ -90,7 +90,7 @@ var runChecks = function(){
 	console.log(program.file);
 	var checkJson = checkHtmlFile(program.file, program.checks);
     var outJson = JSON.stringify(checkJson, null, 4);
-    var outFile = fs.createWriteStream("output.json");
+    var outFile = fs.createWriteStream("grader_output.json");
     outFile.end(outJson);
     console.log(outJson);
 }
@@ -100,10 +100,10 @@ if(require.main == module) {
         .option('-c, --checks <check_file>', 'Path to checks.json', clone(assertFileExists), CHECKSFILE_DEFAULT)
         .option('-f, --file <html_file>', 'Path to index.html', clone(assertFileExists), HTMLFILE_DEFAULT)
         .parse(process.argv);
-        if(program.file != "check.html"){
+        if(program.file != "grader_check.html"){
 			var checkJson = checkHtmlFile(program.file, program.checks);
 			var outJson = JSON.stringify(checkJson, null, 4);
-			var outFile = fs.createWriteStream("output.json");
+			var outFile = fs.createWriteStream("grader_output.json");
 			outFile.end(outJson);
 			console.log(outJson);
 		}
