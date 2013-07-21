@@ -4,6 +4,12 @@ var express = require('express');
 var fs = require('fs');
 
 var app = express.createServer(express.logger());
+app.use("/bootstrap", express.static(__dirname + '/bootstrap'));
+app.use("/jquery", express.static(__dirname + '/jquery'));
+app.use("/bootstrap-social-buttons", express.static(__dirname + '/bootstrap-social-buttons'));
+app.use("/Font-Awesome", express.static(__dirname + '/Font-Awesome'));
+
+app.use("/include", express.static(__dirname + '/include'));
 
 
 
